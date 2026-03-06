@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Приглашение на свадьбу</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #b8924e;
+            --cream: #fdfaf5;
+            --dark: #333;
+            --anim-speed: 2s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: 'Playfair Display', serif;
+            color: var(--dark);
+            overflow: hidden;
+            /* Заблокировано до открытия */
+            display: flex;
+            justify-content: center;
+        }
+
+        .mobile-wrapper {
+            width: 100%;
+            max-width: 768px;
+            background: var(--cream);
+            height: 100vh;
+            position: relative;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .mobile-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- КОНВЕРТ (FIRST SCREEN) --- */
+        #envelope-overlay {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 768px;
+            height: 100%;
+            background: var(--cream);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1.8s cubic-bezier(0.82, 0.01, 0.15, 1);
+        }
+
+        .envelope-visual {
+            width: 280px;
+            height: 180px;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #f3f3f3;
+        }
+
+        .wax-seal {
+            width: 75px;
+            height: 75px;
+            background: radial-gradient(circle, #961d1d, #7a1414);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            z-index: 10;
+            border: 2px solid #5a0e0e;
+            transition: transform 0.3s;
+        }
+
+        .wax-seal:active {
+            transform: scale(0.9);
+        }
+
+        /* --- АНИМАЦИИ ТЕКСТА --- */
+        .reveal-text {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(30px);
+            transition: all var(--anim-speed) cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        section.active .reveal-text {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        .delay-1 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.6s;
+        }
+
+        .delay-3 {
+            transition-delay: 1s;
+        }
+
+        /* --- СТИЛИ СЕКЦИЙ --- */
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin: 10px 0;
+        }
+
+        h2 {
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* --- КРАСИВЫЙ ТАЙМЕР --- */
+        .timer-container {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .timer-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .timer-val {
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timer-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+        }
+
+        /* --- КАЛЕНДАРЬ --- */
+        .calendar-box {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(184, 146, 78, 0.2);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .day {
+            font-size: 0.8rem;
+            padding: 5px;
+            color: #888;
+        }
+
+        .active-day {
+            background: var(--gold);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        /* --- ФОРМА --- */
+        #rsvp-form {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            background: #fff;
+            font-family: inherit;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: var(--gold);
+            color: white;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .map-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px solid;
+            padding-bottom: 2px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="dance-music" loop>
+        <source src="TTTT.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="mobile-wrapper" id="scroll-container">
+
+        <div id="envelope-overlay">
+            <div class="envelope-visual">
+                <div class="wax-seal" onclick="openAll()">K&N</div>
+            </div>
+            <p
+                style="margin-top: 25px; letter-spacing: 3px; font-size: 0.8rem; color: var(--gold); font-family: 'Montserrat', sans-serif;">
+                Чакыруу барагын ачыңыз</p>
+        </div>
+
+        <section>
+            <h2 class="reveal-text delay-1" style="padding: 0 40px; font-size: 0.9rem;">УРМАТТУУ БИЗДИН СЫЙЛУУ
+                КОНОКТОРУБУЗ!
+            </h2>
+            <h1 class="reveal-text delay-2">Kuba <br>&<br> Nasyikat</h1>
+            <p class="reveal-text delay-3">Сиздерди үйлөнүү-үлпөт тойубузга чакырабыз!</p>
+        </section>
+
+        <section style="background: #fff -box;">
+            <img src="ringe-1.svg" alt="" width="300" height="200">
+            <p class="reveal-text delay-1" style="padding: 0 40px; font-size: 1.3rem;">
+                "Бирге болуп тилегибиз, оюбуз.
+                Белгиленди үлпөт курчу тойубуз,
+                Чакырабыз келип биздин кечеге.
+                Торубузда сыйлуу мейман болуңуз!
+                "
+            </p>
+        </section>
+
+        <section>
+            <h2 class="reveal-text delay-1">Тойдун датасы</h2>
+            <div class="calendar-box reveal-text delay-2">
+                <div style="font-weight: bold; letter-spacing: 2px;">МАРТ</div>
+                <div class="cal-grid" id="calendar"></div>
+            </div>
+            <p class="reveal-text delay-3">Кеченин башталышы: 5:00pm</p>
+        </section>
+
+        <section>
+            <h2 class="reveal-text delay-1">Той салтанатына чейин:</h2>
+            <div class="timer-container reveal-text delay-2" id="timer">
+                <div class="timer-block"><span class="timer-val" id="d">00</span><span class="timer-label">дн</span>
+                </div>
+                <div class="timer-block"><span class="timer-val" id="h">00</span><span class="timer-label">час</span>
+                </div>
+                <div class="timer-block"><span class="timer-val" id="m">00</span><span class="timer-label">мин</span>
+                </div>
+                <div class="timer-block"><span class="timer-val" id="s">00</span><span class="timer-label">сек</span>
+                </div>
+            </div>
+            <h1 class="reveal-text delay-3" style="font-size: 2rem;">Bellagio Restaurant</h1>
+            <a href="https://maps.app.goo.gl/xeNDCZSZ6tbP3mSm6?g_st=ic
+" target="_blank" class="map-btn reveal-text delay-3" style="font-size: 20px;">Дареги</a>
+        </section>
+
+        <section>
+            <h2 class="reveal-text delay-1">Конок анкетасы</h2>
+            <form id="rsvp-form" class="reveal-text delay-2">
+                <input type="text" name="name" placeholder="Ваше Имя" required>
+
+                <select name="attend" id="attend-select" required>
+                    <option value="" disabled selected>Тойго келесизби?</option>
+                    <option value="yes">Барам</option>
+                    <option value="no">Жок</option>
+                </select>
+
+                <select name="guests" id="guests-select">
+                    <option value="" disabled selected>Канча адам менен келесиз?</option>
+                    <option value="1">1 </option>
+                    <option value="2">2 </option>
+                    <option value="3">3 </option>
+                    <option value="4">4 </option>
+                    <option value="5">5 </option>
+                </select>
+
+                <button type="submit" id="submit-btn">Жөнөтүү</button>
+                <div id="status" style="margin-top: 15px; display: none; color: var(--gold); font-weight: bold;">
+                    Рахмат! жооп кабыл алынды.
+                </div>
+            </form>
+        </section>
+        <section style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('bg.jpg') bottom/cover;">
+            <h1 class="reveal-text delay-1" style="color: white; font-size: 2.5rem;">Сиздерди кyтөбyз!</h1>
+        </section>
+    </div>
+
+    <script>
+        // 1. Заполнение календаря
+        const cal = document.getElementById('calendar');
+        for (let i = 1; i <= 31; i++) {
+            const d = document.createElement('div');
+            d.className = 'day' + (i === 22 ? ' active-day' : '');
+            d.innerText = i;
+            cal.appendChild(d);
+        }
+
+        // 2. Логика таймера
+        function updateTimer() {
+            const target = new Date('March 22, 2026 16:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        // 3. Открытие и авто-скролл
+        let autoScrollInterval;
+        function openAll() {
+            document.getElementById('envelope-overlay').style.transform = 'translate(-50%, -100%)';
+            document.getElementById('dance-music').play();
+            document.body.style.overflow = 'auto'; // Разрешаем скролл
+
+            // Авто-скролл (останавливается на последнем слайде)
+            setTimeout(() => {
+                const sections = document.querySelectorAll('section');
+                let current = 0;
+                autoScrollInterval = setInterval(() => {
+                    current++;
+                    if (current < sections.length) {
+                        sections[current].scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        clearInterval(autoScrollInterval); // Остановить на конце
+                    }
+                }, 6000);
+            }, 1000);
+        }
+
+        // Остановить авто-скролл, если пользователь начал скроллить сам
+        window.addEventListener('wheel', () => clearInterval(autoScrollInterval));
+        window.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
+
+        // 4. Наблюдатель за анимациями (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+        // 5. Отправка RSVP
+        document.getElementById('rsvp-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const attend = document.getElementById('attend-select').value;
+            const guests = document.getElementById('guests-select').value;
+            const btn = document.getElementById('submit-btn');
+            const status = document.getElementById('status');
+
+            // Логика проверки:
+            if (attend === "yes" && !guests) {
+                alert("Пожалуйста, выберите количество гостей.");
+                return; // Останавливаем отправку
+            }
+
+            // Если всё ок, начинаем отправку
+            btn.innerText = "Жөнөтүү...";
+            btn.disabled = true;
+
+            const data = Object.fromEntries(new FormData(this).entries());
+            const URL = 'https://script.google.com/macros/s/AKfycby_7BViGrtP4nq3gdPyl1oCM5mswAVyt-h3prneGEvlrcafVryBVKuZ2Q1MAPwrBKQrng/exec';
+
+            fetch(URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(data)
+            }).then(() => {
+                status.style.display = 'block';
+                btn.style.display = 'none';
+                this.reset();
+            }).catch(err => {
+                console.error("Ошибка:", err);
+                alert("Произошла ошибка при отправке. Попробуйте еще раз.");
+                btn.innerText = "Отправить ответ";
+                btn.disabled = false;
+            });
+        });
+
+    </script>
+</body>
+
+</html>
