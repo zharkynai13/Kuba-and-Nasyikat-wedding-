@@ -281,40 +281,44 @@
                 <div class="wax-seal" onclick="openAll()">K&N</div>
             </div>
             <p
-                style="margin-top: 25px; letter-spacing: 3px; font-size: 0.8rem; color: var(--gold); font-family: 'Montserrat', sans-serif;">
+                style="margin-top: 25px; letter-spacing: 3px; font-size: 1.0rem; color: var(--gold); font-family: 'Montserrat', sans-serif;">
                 Чакыруу барагын ачыңыз</p>
         </div>
 
         <section>
-            <h2 class="reveal-text delay-1" style="padding: 0 40px; font-size: 0.9rem;">УРМАТТУУ БИЗДИН СЫЙЛУУ
+            <h2 class="reveal-text delay-1" style="padding: 0 40px; font-size: 0.9rem; color: #000;">УРМАТТУУ БИЗДИН
+                СЫЙЛУУ
                 КОНОКТОРУБУЗ!
             </h2>
-            <h1 class="reveal-text delay-2">Kuba <br>&<br> Nasyikat</h1>
-            <p class="reveal-text delay-3">Сиздерди үйлөнүү-үлпөт тойубузга чакырабыз!</p>
+            <h1 class="reveal-text delay-2">Куба <br>&<br> Насыйкат</h1>
+            <h2 class="reveal-text delay-1" style="padding: 0 40px; font-size: 0.9rem; color: #000;">СИЗДЕРДИ
+                ҮЙЛӨНҮҮ-ҮЛПӨТ ТОЙУБУЗГА
+                ЧАКЫРАБЫЗ!
+            </h2>
         </section>
 
-        <section style="background: #fff -box;">
-            <img src="ringe-1.svg" alt="" width="300" height="200">
+        <section style="background: url(Beige\ Minimalist\ Wedding\ Invitation\ \(1\).png) center/cover">
+            <!-- <img src="ringe-1.svg" alt="" width="300" height="200">
             <p class="reveal-text delay-1" style="padding: 0 40px; font-size: 1.3rem;">
                 "Бирге болуп тилегибиз, оюбуз.
                 Белгиленди үлпөт курчу тойубуз,
                 Чакырабыз келип биздин кечеге.
                 Торубузда сыйлуу мейман болуңуз!
                 "
-            </p>
+            </p> -->
         </section>
 
-        <section>
-            <h2 class="reveal-text delay-1">Тойдун датасы</h2>
+        <section style="background: url('data.jpg') center/cover ;">
+            <!-- <h2 class="reveal-text delay-1">Тойдун датасы</h2>
             <div class="calendar-box reveal-text delay-2">
                 <div style="font-weight: bold; letter-spacing: 2px;">МАРТ</div>
                 <div class="cal-grid" id="calendar"></div>
-            </div>
-            <p class="reveal-text delay-3">Кеченин башталышы: 5:00pm</p>
+            </div> -->
+
         </section>
 
         <section>
-            <h2 class="reveal-text delay-1">Той салтанатына чейин:</h2>
+            <h2 class="reveal-text delay-1" style="color: #000;">Той салтанатына чейин:</h2>
             <div class="timer-container reveal-text delay-2" id="timer">
                 <div class="timer-block"><span class="timer-val" id="d">00</span><span class="timer-label">дн</span>
                 </div>
@@ -327,13 +331,13 @@
             </div>
             <h1 class="reveal-text delay-3" style="font-size: 2rem;">Bellagio Restaurant</h1>
             <a href="https://maps.app.goo.gl/xeNDCZSZ6tbP3mSm6?g_st=ic
-" target="_blank" class="map-btn reveal-text delay-3" style="font-size: 20px;">Дареги</a>
+" target="_blank" class="map-btn reveal-text delay-3" style="font-size: 1rem; color: var(--dark);">Дареги</a>
         </section>
 
         <section>
-            <h2 class="reveal-text delay-1">Конок анкетасы</h2>
+            <h2 class="reveal-text delay-1" style="color: black;">Конок анкетасы</h2>
             <form id="rsvp-form" class="reveal-text delay-2">
-                <input type="text" name="name" placeholder="Ваше Имя" required>
+                <input type="text" name="name" placeholder="Аты-жөнүңүз" required>
 
                 <select name="attend" id="attend-select" required>
                     <option value="" disabled selected>Тойго келесизби?</option>
@@ -355,21 +359,25 @@
                     Рахмат! жооп кабыл алынды.
                 </div>
             </form>
+
+            <h2 class="reveal-text delay-1" style="color: black; padding-top: 0px;">Сиздерди күтөбүз!</h2>
+            <!-- <p class="reveal-text delay-2" style="color: black;">Сиздерди күтөбүз!</p> -->
         </section>
         <section style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('bg.jpg') bottom/cover;">
-            <h1 class="reveal-text delay-1" style="color: white; font-size: 2.5rem;">Сиздерди кyтөбyз!</h1>
+            <h1 class="reveal-text delay-1" style="color: white; font-size: 2.0rem;">Урматтоо менен <br>
+                Куба & Насыйкат!</h1>
         </section>
     </div>
 
     <script>
-        // 1. Заполнение календаря
-        const cal = document.getElementById('calendar');
-        for (let i = 1; i <= 31; i++) {
-            const d = document.createElement('div');
-            d.className = 'day' + (i === 22 ? ' active-day' : '');
-            d.innerText = i;
-            cal.appendChild(d);
-        }
+        // // 1. Заполнение календаря
+        // const cal = document.getElementById('calendar');
+        // for (let i = 1; i <= 31; i++) {
+        //     const d = document.createElement('div');
+        //     d.className = 'day' + (i === 22 ? ' active-day' : '');
+        //     d.innerText = i;
+        //     cal.appendChild(d);
+        // }
 
         // 2. Логика таймера
         function updateTimer() {
